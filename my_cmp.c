@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     int byte_position = 0, line_number = 1; //Variables per rastrejar la posició del byte i el número de línia.
 
     // Comparar byte a byte
-    while (1) { //Llegeix 1 byte del segon fitxer i l'emmagatzema a buf2. Retorna el nombre de bytes llegits (normalment 1 si tot va bé, 0 si error).
+    while (1) { //Llegeix 1 byte de cada arxiu
         bytes_read1 = read(fd1, &buf1, 1);  //Llegeix 1 byte del primer fitxer i l'emmagatzema a buf1. Retorna el nombre de bytes llegits (normalment 1 si tot va bé, 0 si error).
         bytes_read2 = read(fd2, &buf2, 1); //Llegeix 1 byte del segon fitxer i l'emmagatzema a buf2. Retorna el nombre de bytes llegits (normalment 1 si tot va bé, 0 si error).
 
