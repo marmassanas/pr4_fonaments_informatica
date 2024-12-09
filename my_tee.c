@@ -11,28 +11,22 @@ int main(int argc, char *argv[]) {
     }
 
     // Intenta crear un arxiu amb el nom especificat com a primer argument (argv[1]).
-    int fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC, PERMISSIONS); // O_WRONLY: Obrir l'arxiu en mode només escriptura. O_CREAT: Crear l'arxiu si no existeix. O_TRUNC: Si l'arxiu ja existeix, es buida.
+    int fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC, PERMISSIONS); // O_WRONLY: Obrir l'arxiu en mode només escriptura. O_CREAT: Crear l'arxiu si no existeix. 
+                                                                        //O_TRUNC: Si l'arxiu ja existeix, es buida.
     if (fd == -1) { //Si open falla (per exemple, per manca de permisos o espai insuficient), retorna -1
         perror("Error creant l'arxiu");
         exit(-1);
     }
 
-    char buffer; //Variable on es guardarà un caràcter llegit de l'entrada estàndard.
+    char buffer[1024]; //Variable on es guardarà un caràcter llegit de l'entrada estàndard.
     ssize_t bytes_read, bytes_written; //Guardaran el nombre de bytes llegits i escrits respectivament.
 
     // Llegir caràcters d'entrada estàndard
     //Llegeix un caràcter (1 byte) de l'entrada estàndard (STDIN_FILENO) i l'emmagatzema a buffer. 
-    while ((bytes_read = read(STDIN_FILENO, &buffer, 1)) > 0) { //read retorna el nombre de bytes llegits
-        // Escriu el contingut de buffer a la sortida estàndard (STDOUT_FILENO).
-        bytes_written = write(STDOUT_FILENO, &buffer, bytes_read);
-        if (bytes_written == -1) { //Comprova si write falla (-1)
-            perror("Error escrivint a la sortida estàndard");
-            close(fd);
-            exit(-1);
-        }
-
+    while ((bytes_read = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0) { //read retorna el nombre de bytes llegits
+    
         // Escriu el contingut de buffer a l'arxiu indicat pel descriptor fd.
-        bytes_written = write(fd, &buffer, bytes_read);
+        bytes_written = write(fd, buffer, bytes_read);
         if (bytes_written == -1) { //Comprova si write falla (-1)
             perror("Error escrivint a l'arxiu");
             close(fd);
