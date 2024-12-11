@@ -11,9 +11,10 @@ int main(int argc, char *argv[]) {
     }
 
     // Intenta crear un arxiu amb el nom especificat com a primer argument (argv[1]).
-    int fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC, PERMISSIONS); // O_WRONLY: Obrir l'arxiu en mode només escriptura. O_CREAT: Crear l'arxiu si no existeix. 
+    int fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC, PERMISSIONS); // O_WRONLY: Obrir l'arxiu en mode només escriptura. 
+                                                                        //O_CREAT: Crear l'arxiu si no existeix. 
                                                                         //O_TRUNC: Si l'arxiu ja existeix, es buida.
-    if (fd == -1) { //Si open falla (per exemple, per manca de permisos o espai insuficient), retorna -1
+    if (fd == -1) { //Si open falla, retorna -1
         perror("Error creant l'arxiu");
         exit(-1);
     }
