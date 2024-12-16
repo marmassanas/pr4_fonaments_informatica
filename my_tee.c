@@ -26,6 +26,13 @@ int main(int argc, char *argv[]) {
     //Llegeix un caràcter (1 byte) de l'entrada estàndard (STDIN_FILENO) i l'emmagatzema a buffer. 
     while ((bytes_read = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0) { //read retorna el nombre de bytes llegits
     
+        ssize_t stdout_written = write(STDOUT_FILENO, buffer, bytes_read); //envia el contingut llegit (emmagatzemat a buffer) directament a la terminal
+            if (stdout_written == -1) { // Comprova si `write` a STDOUT falla
+                perror("Error escrivint a la sortida estàndard");
+                close(fd);
+                exit(-1);
+            }
+
         // Escriu el contingut de buffer a l'arxiu indicat pel descriptor fd.
         bytes_written = write(fd, buffer, bytes_read);
         if (bytes_written == -1) { //Comprova si write falla (-1)
