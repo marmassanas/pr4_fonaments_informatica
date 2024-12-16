@@ -37,22 +37,17 @@ int main(int argc, char *argv[]) {
             break;
         }
 
-        // Si un arxiu té més bytes que l'altre
-        if (bytes_read1 != bytes_read2) {
-            printf("Els arxius tenen diferents longituds.\n");
+        // Comparar els continguts dels fitxers
+        if (bytes_read1 != bytes_read2 || buf1 != buf2) {
+            if (bytes_read1 != bytes_read2) { // Si un arxiu té més bytes que l'altre
+                printf("Els arxius tenen diferents longituds.\n");
+            } else { // Comprovar si hi ha una diferència
+                printf("Diferència trobada al byte %d, línia %d\n", byte_position, line_number);
+                //Comprova si els bytes actuals dels dos fitxers són diferents:Si són diferents, mostra un missatge amb la posició del byte i el número de línia.
+            }
             close(fd1);
             close(fd2);
             return 0;
-        }
-
-        // Comprovar si hi ha una diferència
-        if (buf1 != buf2) {
-            printf("Diferència trobada al byte %d, línia %d\n",
-                   byte_position, line_number);
-            close(fd1);
-            close(fd2);
-            return 0;
-            //Comprova si els bytes actuals dels dos fitxers són diferents:Si són diferents, mostra un missatge amb la posició del byte i el número de línia.
             //Tanca els fitxers (close(fd1); close(fd2);) i surt del programa (return 0)
         }
 
